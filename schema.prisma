@@ -1,0 +1,26 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:database.db"
+}
+
+generator client {
+  provider             = "prisma-client-py"
+  recursive_type_depth = 5
+}
+
+model File {
+  id              Int             @id @default(autoincrement())
+  name            String
+  version         Int
+  model           String
+  history         History[]
+}
+
+model History{
+  id              Int             @id @default(autoincrement())
+  file            File?           @relation(fields: [file_id], references: [id])
+  file_id         Int
+
+  intput          String
+  output          String
+}
